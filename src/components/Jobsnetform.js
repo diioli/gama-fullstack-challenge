@@ -1,36 +1,68 @@
 import React from 'react';
 import { useFormik } from 'formik';
 
-function Jobsnetform () {
-
-    const formik = useFormik({
-        initialValues: {
-            completName: '',
-            intendPosition:'',
-            day:'',
-            month:'',
-            year:'',
-            maritalStatus:'',
-            gender:'',
-            breed:'',
-            address:'',
-            district:'',
-            city:'',
-            cep:'',
-            phone:'',
-            email: '',
-            ident:'',
-            cpf: '',
-            veiculo:'',
-            habilitacao:'',
-        },
-        onSubmit: values => {
-            console.log('Form data', values)
+    const initialValues = {
+        completName: '',
+        intendPosition:'',
+        day:'',
+        month:'',
+        year:'',
+        maritalStatus:'',
+        gender:'',
+        breed:'',
+        address:'',
+        district:'',
+        city:'',
+        cep:'',
+        phone:'',
+        email: '',
+        ident:'',
+        cpf: '',
+        veiculo:'',
+        habilitacao:'',
+    }
+    const onSubmit = values => {
+        console.log('Form data', values)
+    }
+    const validate = values => {
+        let errors = {}
+        if(!values.completName){
+            errors.completName = 'Campo Obrigatório'
         }
-    });
-
-    // console.log('Form Values', formik.values)
+        if(!values.day){
+            errors.day = 'Preencha DIA de nascimento'
+        }
+        if(!values.month){
+            errors.month = 'Preencha MÊS de nascimento'
+        }  
+        if(!values.year){
+            errors.year = 'Preencha ANO de nascimento'
+        }
+        if(!values.address){
+            errors.address = 'Preencha campo Endereço'
+        }
+        if(!values.email){
+            errors.email = 'Preencha campo E-mail'
+        } else if
+            (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)){
+            errors.email = 'Formato de E-mail inválido'
+        }
+        if(!values.ident){
+            errors.ident = 'Preencha campo Identidade'
+        }
+        if(!values.cpf){
+            errors.cpf = 'Preencha campo CPF'
+        }
+        return errors
+    }
     
+    function Jobsnetform () {
+        const formik = useFormik({
+            initialValues,
+            onSubmit,
+            validate,
+        });
+
     return (
     <div>
         <form onSubmit={formik.handleSubmit} className="form" action="https://jobsnet-bc.netlify.app/" method="POST">
@@ -226,35 +258,35 @@ function Jobsnetform () {
             <fieldset>
                 <div className="control-group">
                     <label className="control-label" htmlFor="address"> Endereço <span>*</span></label>
-                    <input type="text" name="address" placeholder="Nome da Rua, 85, Bloco 2, Apt 504" size="60" required onChange={formik.handleChange} 
+                    <input required type="text" name="address" placeholder="Nome da Rua, 85, Bloco 2, Apt 504" size="60" onChange={formik.handleChange} 
                     value={formik.values.address}/>
                 </div>
             </fieldset>
 
             <fieldset>
                 <div className="control-group">
-                    <label className="control-label" htmlFor="district" id="district"> Bairro </label>
-                    <input type="text" name="district" size="22" onChange={formik.handleChange} 
+                    <label className="control-label" htmlFor="district" id="district"> Bairro <span>*</span></label>
+                    <input required type="text" name="district" size="22" onChange={formik.handleChange} 
                     value={formik.values.district}/>
                 </div>
 
                 <div className="control-group">
-                    <label className="control-label" htmlFor="city" id="city"> Cidade </label>
-                    <input type="text" name="city" size="21" onChange={formik.handleChange} 
+                    <label className="control-label" htmlFor="city" id="city"> Cidade <span>*</span></label>
+                    <input required type="text" name="city" size="21" onChange={formik.handleChange} 
                     value={formik.values.city}/>
                 </div>
             </fieldset>
 
             <fieldset>
                 <div className="control-group">
-                    <label className="control-label" htmlFor="cep" id="cep"> CEP </label>
-                    <input type="text" name="cep" size="22" onChange={formik.handleChange} 
+                    <label className="control-label" htmlFor="cep" id="cep"> CEP <span>*</span></label>
+                    <input required type="text" name="cep" size="22" onChange={formik.handleChange} 
                     value={formik.values.cep}/>
                 </div>
 
                 <div className="control-group">
-                    <label className="control-label" htmlFor="phone" id="phone"> Celular </label>
-                    <input type="tel" name="phone" size="21" placeholder="(99) 99999-9999" onChange={formik.handleChange} 
+                    <label className="control-label" htmlFor="phone" id="phone"> Celular <span>*</span></label>
+                    <input required type="tel" name="phone" size="21" placeholder="(99) 99999-9999" onChange={formik.handleChange} 
                     value={formik.values.phone}/>
                 </div>
             </fieldset>
@@ -262,7 +294,7 @@ function Jobsnetform () {
             <fieldset>
                 <div className="control-group">
                     <label className="control-label" htmlFor="email "id="email"> E-mail <span>*</span></label>
-                    <input type="email" name="email" size="40" placeholder="seuemail@mail.com" required onChange={formik.handleChange} value={formik.values.email}/>
+                    <input required type="email" name="email" size="40" placeholder="seuemail@mail.com" onChange={formik.handleChange} value={formik.values.email}/>
                 </div>
             </fieldset><br></br>
 
@@ -275,13 +307,13 @@ function Jobsnetform () {
             <fieldset>
                 <div className="control-group">
                     <label className="control-label" htmlFor="ident" id="ident"> Identidade <span>*</span></label>
-                    <input type="text" name="ident" required onChange={formik.handleChange} 
+                    <input required type="text" name="ident"onChange={formik.handleChange} 
                     value={formik.values.ident}/>
                 </div>
 
                 <div className="control-group">
-                    <label className="control-label" htmlFor="cpf" id="cpf">CPF <span>*</span></label>
-                    <input type="text" name="cpf" required onChange={formik.handleChange} value={formik.values.cpf}/>
+                    <label className="control-label" htmlFor="cpf" id="cpf"> CPF <span>*</span> </label>
+                    <input required type="text" name="cpf" onChange={formik.handleChange} value={formik.values.cpf}/>
                 </div>
             </fieldset>
 
