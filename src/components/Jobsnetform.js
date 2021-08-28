@@ -30,28 +30,40 @@ import { useFormik } from 'formik';
             errors.completName = 'Campo Obrigatório'
         }
         if(!values.day){
-            errors.day = 'Preencha DIA de nascimento'
+            errors.day = 'Campo Obrigatório'
         }
         if(!values.month){
-            errors.month = 'Preencha MÊS de nascimento'
+            errors.month = 'Campo Obrigatório'
         }  
         if(!values.year){
-            errors.year = 'Preencha ANO de nascimento'
+            errors.year = 'Campo Obrigatório'
         }
         if(!values.address){
-            errors.address = 'Preencha campo Endereço'
+            errors.address = 'Campo Obrigatório'
+        }
+        if(!values.district){
+            errors.district = 'Campos Obrigatórios'
+        }
+        if(!values.city){
+            errors.city = ''
+        }
+        if(!values.cep){
+            errors.cep = 'Campos Obrigatórios'
+        }
+        if(!values.phone){
+            errors.phone = ''
         }
         if(!values.email){
-            errors.email = 'Preencha campo E-mail'
+            errors.email = 'Campo Obrigatório'
         } else if
             (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)){
             errors.email = 'Formato de E-mail inválido'
         }
         if(!values.ident){
-            errors.ident = 'Preencha campo Identidade'
+            errors.ident = 'Campos Obrigatórios'
         }
         if(!values.cpf){
-            errors.cpf = 'Preencha campo CPF'
+            errors.cpf = ''
         }
         return errors
     }
@@ -62,6 +74,8 @@ import { useFormik } from 'formik';
             onSubmit,
             validate,
         });
+
+        console.log('Form errors', formik.errors)
 
     return (
     <div>
@@ -75,6 +89,7 @@ import { useFormik } from 'formik';
                 <div className="control-group">
                     <label className="control-label" htmlFor="completName"> Nome Completo <span>*</span></label>
                     <input type="text" id="completName" name="completName" size="60" required onChange={formik.handleChange} value={formik.values.completName}/>
+                    {formik.errors.completName ? <div className="error">{formik.errors.completName}</div> : null}
                 </div>
             </fieldset>
 
@@ -89,6 +104,7 @@ import { useFormik } from 'formik';
                     <label className="control-label" htmlFor="dataNasc" id="dataNasc" name="dataNasc"> Data de Nascimento <span>*</span></label>
                     <select name="day" required onChange={formik.handleChange} 
                     value={formik.values.day}>
+                    {formik.errors.day ? <div className="error">{formik.errors.day}</div> : null}
                         <option> Dia </option>
                         <option value="01"> 01 </option>
                         <option value="02"> 02 </option>
@@ -125,6 +141,7 @@ import { useFormik } from 'formik';
 
                     <select name="month" required onChange={formik.handleChange} 
                     value={formik.values.month}>
+                    {formik.errors.month ? <div className="error">{formik.errors.month}</div> : null}
                         <option> Mês </option>
                         <option value="Janeiro"> Janeiro </option>
                         <option value="Fevereiro"> Fevereiro </option>
@@ -142,6 +159,7 @@ import { useFormik } from 'formik';
 
                     <select name="year" required onChange={formik.handleChange} 
                     value={formik.values.year}>
+                    {formik.errors.year ? <div className="error">{formik.errors.year}</div> : null}
                         <option> Ano </option>
                         <option value="2021"> 2021 </option>
                         <option value="2020"> 2020 </option>
@@ -260,6 +278,7 @@ import { useFormik } from 'formik';
                     <label className="control-label" htmlFor="address"> Endereço <span>*</span></label>
                     <input required type="text" name="address" placeholder="Nome da Rua, 85, Bloco 2, Apt 504" size="60" onChange={formik.handleChange} 
                     value={formik.values.address}/>
+                    {formik.errors.address ? <div className="error">{formik.errors.address}</div> : null}
                 </div>
             </fieldset>
 
@@ -268,12 +287,14 @@ import { useFormik } from 'formik';
                     <label className="control-label" htmlFor="district" id="district"> Bairro <span>*</span></label>
                     <input required type="text" name="district" size="22" onChange={formik.handleChange} 
                     value={formik.values.district}/>
+                    {formik.errors.district ? <div className="error">{formik.errors.district}</div> : null}
                 </div>
 
                 <div className="control-group">
                     <label className="control-label" htmlFor="city" id="city"> Cidade <span>*</span></label>
                     <input required type="text" name="city" size="21" onChange={formik.handleChange} 
                     value={formik.values.city}/>
+                    {formik.errors.city ? <div className="error" id="city">{formik.errors.city}</div> : null}
                 </div>
             </fieldset>
 
@@ -282,12 +303,14 @@ import { useFormik } from 'formik';
                     <label className="control-label" htmlFor="cep" id="cep"> CEP <span>*</span></label>
                     <input required type="text" name="cep" size="22" onChange={formik.handleChange} 
                     value={formik.values.cep}/>
+                    {formik.errors.cep ? <div className="error">{formik.errors.cep}</div> : null}
                 </div>
 
                 <div className="control-group">
                     <label className="control-label" htmlFor="phone" id="phone"> Celular <span>*</span></label>
                     <input required type="tel" name="phone" size="21" placeholder="(99) 99999-9999" onChange={formik.handleChange} 
                     value={formik.values.phone}/>
+                    {formik.errors.phone ? <div className="error">{formik.errors.phone}</div> : null}
                 </div>
             </fieldset>
 
@@ -295,6 +318,7 @@ import { useFormik } from 'formik';
                 <div className="control-group">
                     <label className="control-label" htmlFor="email "id="email"> E-mail <span>*</span></label>
                     <input required type="email" name="email" size="40" placeholder="seuemail@mail.com" onChange={formik.handleChange} value={formik.values.email}/>
+                    {formik.errors.email ? <div className="error">{formik.errors.email}</div> : null}
                 </div>
             </fieldset><br></br>
 
@@ -309,11 +333,13 @@ import { useFormik } from 'formik';
                     <label className="control-label" htmlFor="ident" id="ident"> Identidade <span>*</span></label>
                     <input required type="text" name="ident"onChange={formik.handleChange} 
                     value={formik.values.ident}/>
+                    {formik.errors.ident ? <div className="error">{formik.errors.ident}</div> : null}
                 </div>
 
                 <div className="control-group">
                     <label className="control-label" htmlFor="cpf" id="cpf"> CPF <span>*</span> </label>
                     <input required type="text" name="cpf" onChange={formik.handleChange} value={formik.values.cpf}/>
+                    {formik.errors.cpf ? <div className="error">{formik.errors.cpf}</div> : null}
                 </div>
             </fieldset>
 

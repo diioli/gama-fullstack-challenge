@@ -96,6 +96,12 @@ fieldset {
     align-content: center;
     padding: 10px;
 }
+.error {
+    display: block;
+    color:rgba(27, 27, 27, 0.8);
+    margin-top: 10px;
+    font-size: 10px;
+}
 
 select {
     display: inline-block;
